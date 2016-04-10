@@ -11,7 +11,7 @@ class Character {
 }
 
 Character.prototype.attackCharacter = function(defender) {
-  var base_damage = Math.abs(this.health - defender.health);
+  var base_damage = this.attack - defender.defense;
   var random_damage = Math.floor(Math.random() * 5);
   var total_damage = base_damage + random_damage;
 
