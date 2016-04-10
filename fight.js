@@ -11,7 +11,15 @@ class Character {
 }
 
 Character.prototype.attackCharacter = function(defender) {
-  // Implement me!
+  var base_damage = Math.abs(this.health - defender.health);
+  var random_damage = Math.floor(Math.random() * 5);
+  var total_damage = base_damage + random_damage;
+
+  defender.health -= total_damage;
+
+  console.log("%s does %d damage to %s\n", this.name, total_damage, defender.name);
+  //console.log("attackCharacter! return: %d \n", total_damage);
+  return total_damage;
 }
 
 // Main Fight Logic
@@ -26,7 +34,24 @@ while (player.health && enemy.health) {
 }
 
 function runRound(round, p1, p2) {
-  // Implement me!
+
+  console.log('----- Round %d -----\n', round);
+
+  p1.attackCharacter(p2);
+  //check, if defender's health falls strictly below zero, the games ends
+  if (p2.health < 0 ){
+    endGame(p1, p2);
+  }
+  p2.attackCharacter(p1);
+  //check, if defender's health falls strictly below zero, the game ends
+  if (p1.health < 0){
+    endGame(p2, p1);
+  }
+
+  //log each player's health at the end of each round
+  console.log("%s health: %d\n", p1.name, p1.health);
+  console.log("%s health: %d\n", p2.name, p2.health);
+
 }
 
 function endGame(winner, loser) {
